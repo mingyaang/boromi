@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Building Android Project
         run: |
-          chmod +x gradlew,
+          chmod +x gradlew
           .gradlew build
           
