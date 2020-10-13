@@ -11,4 +11,5 @@ jobs:
         # uses: axel-op/googlejavaformat-action@5045c8c244a22eb6a28eeb6050cc2baebd75c5f2
         uses: axel-op/googlejavaformat-action@v3.4.0
         with:
+          args: --replace
           skipCommit: true
