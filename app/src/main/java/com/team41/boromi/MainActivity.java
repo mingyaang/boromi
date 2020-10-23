@@ -3,9 +3,7 @@ package com.team41.boromi;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import javax.inject.Singleton;
 
-@Singleton
 public class MainActivity extends AppCompatActivity {
 
   @Override
