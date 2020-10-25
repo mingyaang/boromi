@@ -59,8 +59,7 @@ public class UserDB {
   public void pushUser(User user) {
     Gson gson = new Gson();
     gson.toJson(user);
-    usersRef.document().set(user, SetOptions.merge());
+    usersRef.document(user.getUUID()).set(user, SetOptions.merge());
   }
-
 
 }

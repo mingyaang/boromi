@@ -44,7 +44,7 @@ public class AuthenticationController {
    * @param authCallback
    */
   public void makeLoginRequest(String email, String password, final AuthCallback authCallback) {
-    Task<AuthResult> res = auth.signInWithEmailAndPassword(email, password)
+    auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(executor, new OnCompleteListener<AuthResult>() {
           public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
@@ -72,7 +72,7 @@ public class AuthenticationController {
    */
   public void makeSignUpRequest(final String username, String email, String password,
       final AuthCallback authCallback) {
-    Task<AuthResult> res = auth.createUserWithEmailAndPassword(email, password)
+    auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener(executor, new OnCompleteListener<AuthResult>() {
           public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {

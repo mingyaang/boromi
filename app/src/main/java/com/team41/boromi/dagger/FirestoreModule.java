@@ -34,5 +34,4 @@ public abstract class FirestoreModule {
     return FirebaseAuth.getInstance();
   }
 
-
 }
