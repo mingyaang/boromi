@@ -21,7 +21,7 @@ public class TestActivity extends AppCompatActivity {
 
     ((BoromiApp) getApplicationContext()).appComponent.getAuthenticationComponent().inject(this);
 
-    authController.makeLoginRequest("mingyaang@gmail.com", "CMPUT301", new AuthCallback() {
+    authController.makeSignUpRequest("Brock", "bchelle@ualberta.ca", "CMPUT301", new AuthCallback() {
       @Override
       public void onSuccess(AuthResult authResult) {
         Log.d(TAG, "LOGIN GOOD");
