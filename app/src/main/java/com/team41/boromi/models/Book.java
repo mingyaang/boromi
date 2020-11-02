@@ -248,8 +248,6 @@ public class Book implements Serializable {
       return bookId.compareTo((String) obj) == 0;
     } else if (obj instanceof Book) {
       return bookId.compareTo(((Book) obj).getBookId()) == 0;
-    } else if (obj instanceof Integer) {
-      return bookId.hashCode() == (Integer) obj;
     }
     return false;
   }
