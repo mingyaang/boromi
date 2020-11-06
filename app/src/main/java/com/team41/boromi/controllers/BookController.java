@@ -78,6 +78,7 @@ public class BookController {
       final BookCallback bookCallback) {
     if (isNotNullOrEmpty(author) && isNotNullOrEmpty(ISBN) && isNotNullOrEmpty(title)) {
       Book addingBook = new Book(user.getUUID(), title, author, ISBN);
+      addingBook.setOwnerName(user.getUsername());
       addingBook.setStatus(status.AVAILABLE);
       addingBook.setWorkflow(workflow.AVAILABLE);
       if (image != null) {
@@ -108,6 +109,7 @@ public class BookController {
       final BookCallback bookCallback) {
     if (isNotNullOrEmpty(author) && isNotNullOrEmpty(ISBN) && isNotNullOrEmpty(title)) {
       Book addingBook = new Book(user.getUUID(), title, author, ISBN);
+      addingBook.setOwnerName(user.getUsername());
       addingBook.setStatus(status.AVAILABLE);
       addingBook.setWorkflow(workflow.AVAILABLE);
       if (isNotNullOrEmpty(image)) {

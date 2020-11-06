@@ -113,9 +113,9 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     if (holder.user != null) {
       // TODO more logic required depending on the page
       if (resource == R.layout.searched) {
-        holder.user.setText(book.getOwner());
+        holder.user.setText(book.getOwnerName());
       } else {
-        holder.user.setText(book.getBorrower());
+        holder.user.setText(book.getBorrowerName());
       }
     }
     if (holder.title != null) {
