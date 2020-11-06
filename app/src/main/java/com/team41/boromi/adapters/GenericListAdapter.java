@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is an adapter class for a recycler view. This class is meant to be used together
+ * with GenericListFragment to store the individual model cards for each tab
+ */
 public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.ViewHolder> {
 
   private static final String TAG = "Adapter Tag";
@@ -65,6 +70,12 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
   }
 
 
+  /**
+   * This function overrides onCreateViewHolder and is mainly used to initialize onClickListeners
+   * @param parent ViewGroup parent
+   * @param viewType int viewType
+   * @return GenericListAdapter.ViewHolder
+   */
   @NonNull
   @Override
   public GenericListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -104,6 +115,11 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     return holder;
   }
 
+  /**
+   * This function is used to update viewmodel with the correct information
+   * @param holder
+   * @param position
+   */
   @Override
   public void onBindViewHolder(@NonNull GenericListAdapter.ViewHolder holder, int position) {
     Book book = books.get(position);
@@ -111,25 +127,27 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
       holder.author.setText(book.getAuthor());
     }
     if (holder.user != null) {
-      // TODO more logic required depending on the page
       if (resource == R.layout.searched) {
-        holder.user.setText(book.getOwner());
+        holder.user.setText(book.getOwnerName());
       } else {
-        holder.user.setText(book.getBorrower());
+        holder.user.setText(book.getBorrowerName());
       }
     }
     if (holder.title != null) {
       holder.title.setText(book.getTitle());
     }
     if (holder.isbn != null) {
-      holder.isbn.setText(book.getISBN());
+      String isbnText = "ISBN: " + book.getISBN();
+      holder.isbn.setText(isbnText);
     }
     if (holder.imageButton != null) {
       Bitmap b = bookController.decodeBookImage(book);
+
       if (b != null) {
+        holder.imageButton.setScaleType(ImageView.ScaleType.FIT_XY);
         holder.imageButton.setImageBitmap(b);
       } else {
-        holder.imageButton.setImageResource(R.drawable.add_photo_icon);
+        holder.imageButton.setImageResource(R.drawable.book_icon);
       }
     }
     if (holder.reqom != null) {
@@ -152,20 +170,28 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     }
   }
 
+  /**
+   * Returns the number of elements in the list
+   * @return
+   */
   @Override
   public int getItemCount() {
     return books.size();
   }
 
+  /**
+   * Sets the books that have requests. Used for request tabs
+   * @param bookWithRequests Map of key: Book, value: List<BookRequest>
+   */
   public void setBookWithRequests(
       Map<Book, List<BookRequest>> bookWithRequests) {
     this.bookWithRequests = bookWithRequests;
   }
 
-  public ArrayList<SubListAdapter> getSubListAdapters() {
-    return subListAdapters;
-  }
-
+  /**
+   * This function notifies subAdapters used in the Owner book requests tab that the data has
+   * been changed
+   */
   public void notifySubAdapters() {
     for (SubListAdapter subListAdapter : subListAdapters) {
       subListAdapter.setUsersRequested(
@@ -174,6 +200,11 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     }
   }
 
+  /**
+   * This function deletes a book request when a request has been accepted
+   * @param book Book to be deleted
+   * @param subListAdapter Adapter for sub lists
+   */
   public void deleteBookRequest(Book book, SubListAdapter subListAdapter) {
     this.books.remove(book);
     this.bookWithRequests.remove(book);
@@ -188,6 +219,9 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     });
   }
 
+  /**
+   * This class holds the models used in the recyclerView
+   */
   public static class ViewHolder extends RecyclerView.ViewHolder {
 
     TextView title;
@@ -201,9 +235,15 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
     Button request_button;
     TextView withdrawButton;
 
+    /**
+     * This Constructor finds the layout elements depending on which layout is being used
+     * @param itemView
+     * @param layout
+     */
     public ViewHolder(@NonNull View itemView, int layout) {
       super(itemView);
       view = itemView;
+
       switch (layout) {
         case (R.layout.available):
           title = itemView.findViewById(R.id.available_title);
@@ -275,6 +315,9 @@ public class GenericListAdapter extends RecyclerView.Adapter<GenericListAdapter.
           reqom = null;
           break;
       }
+
+      // Makes the circular
+      imageButton.setClipToOutline(true);
     }
   }
 }
